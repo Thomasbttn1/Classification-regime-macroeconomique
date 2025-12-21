@@ -1,0 +1,152 @@
+# Configuration du Projet d'Allocation d'Actifs 2026
+
+# Paramètres des données
+data:
+  start_date: "2010-01-01"
+  end_date: "2025-12-18"
+  frequency: "monthly"  # Données mensuelles pour les indicateurs économiques
+  
+  # Sources Bloomberg
+  tickers:
+    ism_pmi: "NAPMPMI Index"
+    consumer_sentiment: "CONSSENT Index"
+    fed_rate: "FDTR Index"
+    cpi_mom: "CPI CHNG Index"
+    spx: "^GSPC"  # S&P 500 pour rendements futurs
+
+# Paramètres du FCI
+fci:
+  window: 12  # Fenêtre de normalisation en mois
+  weights:
+    ism: 0.25
+    sentiment: 0.25
+    fed_rate: -0.25
+    cpi: -0.25
+  
+  thresholds:
+    restrictive: -20
+    accommodating: 20
+
+# Paramètres du Feature Engineering
+features:
+  window_ma: 6  # Moyenne mobile 6 mois
+  window_zscore: 12  # Z-score sur 12 mois
+  
+  composites:
+    - name: "growth_momentum"
+      formula: "zscore_ism + zscore_sentiment"
+    - name: "policy_pressure"
+      formula: "fed_change_12m + cpi_annualized"
+
+# Paramètres du Labeling
+labeling:
+  method: "forward_returns"  # ou "composite_score"
+  forward_window: 60  # jours pour forward returns
+  thresholds:
+    restrictive: -5.0  # -5% rendement
+    accommodating: 5.0  # +5% rendement
+
+# Paramètres du Train/Test Split
+split:
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+  method: "temporal"  # Split temporel strict
+
+# Paramètres des Modèles ML
+models:
+  random_forest:
+    n_estimators: 200
+    max_depth: 10
+    min_samples_split: 20
+    random_state: 42
+    
+  gradient_boosting:
+    n_estimators: 200
+    max_depth: 5
+    learning_rate: 0.1
+    random_state: 42
+    
+  mlp:
+    hidden_layer_sizes: [128, 64, 32]
+    activation: "relu"
+    solver: "adam"
+    max_iter: 500
+    early_stopping: true
+    random_state: 42
+
+# Paramètres d'Évaluation
+evaluation:
+  metrics:
+    - "accuracy"
+    - "f1_weighted"
+    - "precision"
+    - "recall"
+    - "confusion_matrix"
+  
+  validation:
+    correlation_threshold: 0.6  # Corrélation FCI-Rendements
+    backtest_periods:
+      - name: "Covid Crash"
+        start: "2020-02-01"
+        end: "2020-04-01"
+        expected_regime: "RESTRICTIF"
+      - name: "QE Massive"
+        start: "2021-01-01"
+        end: "2022-01-01"
+        expected_regime: "ACCOMMODANT"
+      - name: "Fed Tightening"
+        start: "2022-03-01"
+        end: "2023-12-01"
+        expected_regime: "RESTRICTIF"
+
+# Paramètres de l'Allocation
+allocation:
+  asset_classes:
+    - name: "Actions US"
+      ticker: "SPX Index"
+      weight_neutral: 12.5
+    - name: "Actions EURO"
+      ticker: "SX5E Index"
+      weight_neutral: 12.5
+    - name: "Taux longs US 10 ans"
+      ticker: "USGG10YR Index"
+      weight_neutral: 12.5
+    - name: "Taux courts US 2 ans"
+      ticker: "USGG2YR Index"
+      weight_neutral: 12.5
+    - name: "Taux longs Allemands"
+      ticker: "GDBR10 Index"
+      weight_neutral: 12.5
+    - name: "Taux courts Allemands"
+      ticker: "GDBR2 Index"
+      weight_neutral: 12.5
+    - name: "Taux longs Français"
+      ticker: "GFRN10 Index"
+      weight_neutral: 12.5
+    - name: "Marché monétaire EURO"
+      ticker: "ESTRON Index"
+      weight_neutral: 12.5
+
+# Paramètres de Visualisation
+visualization:
+  style: "seaborn-v0_8-darkgrid"
+  figsize: [14, 8]
+  dpi: 300
+  color_palette: "husl"
+
+# Chemins
+paths:
+  data_raw: "data/raw"
+  data_processed: "data/processed"
+  models: "models/saved_models"
+  results: "results"
+  figures: "results/figures"
+  tables: "results/tables"
+  predictions: "results/predictions"
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/project.log"
