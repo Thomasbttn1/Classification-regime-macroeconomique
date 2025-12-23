@@ -1,0 +1,4 @@
+Le modèle Gradient Boosting initial présentait un surapprentissage sévère (100% train accuracy), mémorisant les données d'entraînement sans généraliser. Une régularisation agressive a été appliquée, réduisant la profondeur des arbres (max_depth=3), le taux d'apprentissage (learning_rate=0.03) et introduisant un fort bagging (subsample=0.6). Ces ajustements ont réduit l'écart train-test de 48 à 35 points et amélioré la performance de test de 51.72% à 55.17%, égalant le Random Forest."
+
+
+"Cette optimisation illustre le trade-off biais-variance classique en machine learning : en augmentant le biais du modèle (arbres plus simples, apprentissage plus lent), on réduit sa variance et améliore sa capacité de généralisation.

@@ -1,0 +1,28 @@
+{
+  "model_name": "RandomForestModel",
+  "model_type": "RandomForestClassifier",
+  "training_date": "2025-12-22T18:01:28.810765",
+  "training_time": 0.10371708869934082,
+  "features_name": [
+    "ISM_PMI",
+    "Consumer_Sentiment",
+    "Fed_Rate",
+    "CPI_MoM",
+    "ISM_change_3m",
+    "Sentiment_change_3m",
+    "Fed_change_12m",
+    "CPI_Annualized",
+    "ISM_MA_6m",
+    "Sentiment_MA_6m",
+    "Fed_MA_6m",
+    "CPI_MA_6m",
+    "ISM_Zscore_12m",
+    "Sentiment_Zscore_12m"
+  ],
+  "classes": [
+    "ACCOMMODANT",
+    "NEUTRE",
+    "RESTRICTIF"
+  ],
+  "n_features": 14
+}

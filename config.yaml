@@ -24,8 +24,8 @@ fci:
     cpi: -0.25
   
   thresholds:
-    restrictive: -20
-    accommodating: 20
+    restrictive: -0.5
+    accommodating: 0.5
 
 # Paramètres du Feature Engineering
 features:
@@ -62,19 +62,13 @@ models:
     random_state: 42
     
   gradient_boosting:
-    n_estimators: 200
-    max_depth: 5
-    learning_rate: 0.1
+    n_estimators: 80
+    max_depth: 3
+    learning_rate: 0.03
     random_state: 42
-    
-  mlp:
-    hidden_layer_sizes: [128, 64, 32]
-    activation: "relu"
-    solver: "adam"
-    max_iter: 500
-    early_stopping: true
-    random_state: 42
-
+    min_samples_split: 20
+    subsample: 0.6
+ 
 # Paramètres d'Évaluation
 evaluation:
   metrics:

@@ -1,0 +1,4 @@
+"Le modèle Random Forest atteint une accuracy de 55.17% sur le test set (2023-2025), soit 22 points au-dessus du hasard (33.3% pour 3 classes). L'analyse de l'importance des features révèle que les indicateurs de sentiment (Consumer Sentiment et ses dérivées) représentent 4 des 5 features les plus importantes, avec le z-score du sentiment sur 12 mois en tête (11.1%). Cette prédominance suggère que les anticipations des consommateurs sont des signaux précurseurs essentiels pour la classification des régimes macroéconomiques."
+
+
+"On observe un écart significatif entre la performance sur le train set (80%) et le validation set (36%), potentiellement dû à la petite taille du validation set (28 observations) et aux changements de régime entre 2010-2020 (train) et 2021-2023 (validation), période marquée par le COVID-19."
