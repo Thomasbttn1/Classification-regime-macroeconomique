@@ -187,6 +187,36 @@ venv\Scripts\activate  # Windows
 pip install -r requirements.txt
 ```
 
+4. **Configurer l'API FRED (obligatoire pour collecter les données économiques)**
+
+a) Obtenir une clé API gratuite :
+   - Aller sur https://fred.stlouisfed.org/
+   - Créer un compte (gratuit)
+   - Demander une API Key : https://fredaccount.stlouisfed.org/apikeys
+
+b) Créer un fichier `.env` à la racine du projet :
+```bash
+touch .env  # Linux/Mac
+# ou créer manuellement sur Windows
+```
+
+c) Ajouter votre clé API dans `.env` :
+```
+FRED_API_KEY=votre_cle_api_ici
+```
+
+Exemple :
+```
+FRED_API_KEY=abc123def456ghi789jkl0mn
+```
+
+d) **IMPORTANT** : Ajouter `.env` au `.gitignore` pour ne pas versionner votre clé :
+```bash
+echo ".env" >> .gitignore
+```
+
+**Note** : Le fichier `.env` ne doit JAMAIS être partagé ou commité sur Git (clé privée).
+
 ---
 
 ## 🚀 Utilisation
